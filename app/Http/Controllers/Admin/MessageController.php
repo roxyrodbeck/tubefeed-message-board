@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     public function index()
     {
         $messages = Message::orderBy('created_at', 'desc')->get();

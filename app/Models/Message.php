@@ -17,7 +17,7 @@ class Message extends Model
         'published_at' => 'datetime',
     ];
 
-    // Only show published announcements on public page
+    // Only show published messages on public page
     public function scopePublished($query)
     {
         return $query->whereNotNull('published_at')
