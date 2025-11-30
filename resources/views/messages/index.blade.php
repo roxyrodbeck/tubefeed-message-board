@@ -35,12 +35,12 @@
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
                             {{ $message->type === 'feature' ? 'bg-green-100 text-green-800' : '' }}
                             {{ $message->type === 'tip' ? 'bg-blue-100 text-blue-800' : '' }}
-                            {{ $message->type === 'update' ? 'bg-purple-100 text-purple-800' : '' }}
+                            {{ $message->type === 'update' ? 'bg-green-100 text-green-800' : '' }}
                             {{ $message->type === 'maintenance' ? 'bg-yellow-100 text-yellow-800' : '' }}
                         ">
                             @if($message->type === 'feature') 🎉 New Feature
                             @elseif($message->type === 'tip') 💡 Tip
-                            @elseif($message->type === 'update') 📢 Update
+                            @elseif($message->type === 'update') Updates
                             @else 🔧 Maintenance
                             @endif
                         </span>
