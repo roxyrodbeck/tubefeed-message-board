@@ -70,7 +70,7 @@
 
         <!-- Footer -->
         <div class="text-center mt-12 text-gray-600">
-            <p>Questions? Visit <a href="https://tubefeedrate.com" class="text-blue-600 hover:underline">Tube Feed Tracker</a></p>
+            <p><a href="https://tubefeedrate.com" class="text-blue-600 hover:underline">Tube Feed Tracker</a></p>
         </div>
     </div>
 </body>
