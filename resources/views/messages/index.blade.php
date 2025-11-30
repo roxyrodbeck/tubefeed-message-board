@@ -27,7 +27,7 @@
                 <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 
                     {{ $message->type === 'feature' ? 'border-green-500' : '' }}
                     {{ $message->type === 'tip' ? 'border-blue-500' : '' }}
-                    {{ $message->type === 'update' ? 'border-purple-500' : '' }}
+                    {{ $message->type === 'update' ? 'border-green-500' : '' }}
                     {{ $message->type === 'maintenance' ? 'border-yellow-500' : '' }}
                 ">
                     <!-- Type Badge -->
