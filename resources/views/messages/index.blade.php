@@ -24,7 +24,7 @@
         <!-- messages -->
         <div class="space-y-6">
             @forelse($messages as $message)
-                <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 
+                <div class="bg-white rounded-lg shadow-sm p-6 border-4 
                     {{ $message->type === 'feature' ? 'border-green-500' : '' }}
                     {{ $message->type === 'tip' ? 'border-blue-500' : '' }}
                     {{ $message->type === 'update' ? 'border-green-500' : '' }}
