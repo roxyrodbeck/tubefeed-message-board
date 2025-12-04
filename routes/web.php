@@ -3,6 +3,7 @@
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubscriberController;
 
 // Public routes
 Route::get('/', function () {
@@ -13,6 +14,8 @@ Route::get('/', function () {
 //     Artisan::call('db:seed', ['--class' => 'SubscriberSeeder']);
 //     return 'Seeder ran successfully!';
 // });
+Route::get('/subscribe', [App\Http\Controllers\SubscriberController::class, 'create']);
+Route::post('/subscribe', [App\Http\Controllers\SubscriberController::class, 'store']);
 
 Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
 Route::get('/messages/rss', [MessageController::class, 'rss'])->name('messages.rss');

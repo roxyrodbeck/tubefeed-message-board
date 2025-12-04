@@ -76,29 +76,36 @@ class MessageController extends Controller
     }
     
     private function sendSMS($title, $messageContent)
-    {
-        $sid = env('TWILIO_SID');
-        $token = env('TWILIO_AUTH_TOKEN');
-        $twilioNumber = env('TWILIO_PHONE_NUMBER');
-        
-        $twilio = new Client($sid, $token);
-        
-        // Get ALL subscribers from database
-        $subscribers = \App\Models\Subscriber::all();
-        
-        // Send SMS to each subscriber
-        foreach ($subscribers as $subscriber) {
-            try {
-                $twilio->messages->create(
-                    $subscriber->phone_number,
-                    [
-                        'from' => $twilioNumber,
-                        'body' => "New Tube Feed Update - " . $title . ": " . $messageContent
-                    ]
-                );
-            } catch (\Exception $e) {
-                \Log::error('SMS failed for ' . $subscriber->phone_number . ': ' . $e->getMessage());
-            }
+{
+    \Log::info('sendSMS called with title: ' . $title);
+    
+    $sid = env('TWILIO_SID');
+    $token = env('TWILIO_AUTH_TOKEN');
+    $twilioNumber = env('TWILIO_PHONE_NUMBER');
+    
+    \Log::info('Twilio credentials - SID: ' . ($sid ? 'SET' : 'NOT SET') . ', Phone: ' . $twilioNumber);
+    
+    $twilio = new Client($sid, $token);
+    
+    // Get ALL subscribers from database
+    $subscribers = \App\Models\Subscriber::all();
+    
+    \Log::info('Found ' . $subscribers->count() . ' subscribers');
+    
+    // Send SMS to each subscriber
+    foreach ($subscribers as $subscriber) {
+        \Log::info('Attempting to send SMS to: ' . $subscriber->phone_number);
+        try {
+            $twilio->messages->create(
+                $subscriber->phone_number,
+                [
+                    'from' => $twilioNumber,
+                    'body' => "New Tube Feed Update - " . $title . ": " . $messageContent
+                ]
+            );
+            \Log::info('SMS sent successfully to: ' . $subscriber->phone_number);
+        } catch (\Exception $e) {
+            \Log::error('SMS failed for ' . $subscriber->phone_number . ': ' . $e->getMessage());
         }
     }
 }
