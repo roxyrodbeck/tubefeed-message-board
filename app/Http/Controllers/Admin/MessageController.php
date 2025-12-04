@@ -18,8 +18,6 @@ class MessageController extends Controller
         $messages = Message::orderBy('created_at', 'desc')->get();
         return view('admin.messages.index', compact('messages'));
     }
-
-    }
     public function create()
     {
         return view('admin.messages.create');
@@ -109,4 +107,6 @@ class MessageController extends Controller
             \Log::error('SMS failed for ' . $subscriber->phone_number . ': ' . $e->getMessage());
         }
     }
+}
+
 }
