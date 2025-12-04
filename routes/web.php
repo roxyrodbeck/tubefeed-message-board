@@ -9,10 +9,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/run-seeder', function() {
-    Artisan::call('db:seed', ['--class' => 'SubscriberSeeder']);
-    return 'Seeder ran successfully!';
-});
+// Route::get('/run-seeder', function() {
+//     Artisan::call('db:seed', ['--class' => 'SubscriberSeeder']);
+//     return 'Seeder ran successfully!';
+// });
 
 Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
 Route::get('/messages/rss', [MessageController::class, 'rss'])->name('messages.rss');
