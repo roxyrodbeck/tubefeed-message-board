@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Twilio\Rest\Client;
 
 class MessageController extends Controller
 {
@@ -22,6 +23,7 @@ class MessageController extends Controller
     {
         return view('admin.messages.create');
     }
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -36,7 +38,10 @@ class MessageController extends Controller
             $validated['published_at'] = now();
         }
 
-        Message::create($validated);
+        $message = Message::create($validated);
+
+        // Send SMS notifications
+        $this->sendSMS($message->title, $message->message);
 
         return redirect()->route('admin.messages.index')
             ->with('success', 'Message created successfully.');
@@ -68,5 +73,32 @@ class MessageController extends Controller
 
         return redirect()->route('admin.messages.index')
             ->with('success', 'Message deleted successfully.');
-    }  
+    }
+    
+    private function sendSMS($title, $messageContent)
+    {
+        $sid = env('TWILIO_SID');
+        $token = env('TWILIO_AUTH_TOKEN');
+        $twilioNumber = env('TWILIO_PHONE_NUMBER');
+        
+        $twilio = new Client($sid, $token);
+        
+        // Get ALL subscribers from database
+        $subscribers = \App\Models\Subscriber::all();
+        
+        // Send SMS to each subscriber
+        foreach ($subscribers as $subscriber) {
+            try {
+                $twilio->messages->create(
+                    $subscriber->phone_number,
+                    [
+                        'from' => $twilioNumber,
+                        'body' => "New Tube Feed Update - " . $title . ": " . $messageContent
+                    ]
+                );
+            } catch (\Exception $e) {
+                \Log::error('SMS failed for ' . $subscriber->phone_number . ': ' . $e->getMessage());
+            }
+        }
+    }
 }
