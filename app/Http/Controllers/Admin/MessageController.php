@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Log; 
 
 class MessageController extends Controller
 {
@@ -39,7 +40,7 @@ class MessageController extends Controller
 
         $message = Message::create($validated);
 
-        // Send SMS notifications
+        // (Twilio) SMS notifications
         $this->sendSMS($message->title, $message->message);
 
         return redirect()->route('admin.messages.index')
@@ -86,7 +87,7 @@ class MessageController extends Controller
     
     $twilio = new Client($sid, $token);
     
-    // Get ALL subscribers from database
+    // ALL DB subscribers 
     $subscribers = \App\Models\Subscriber::all();
     
     \Log::info('Found ' . $subscribers->count() . ' subscribers');

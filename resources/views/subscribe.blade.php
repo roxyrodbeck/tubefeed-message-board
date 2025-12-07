@@ -24,7 +24,7 @@
         </div>
         <div>
             <label>Phone Number (include country code):</label>
-            <input type="text" name="phone_number" placeholder="+12817012625" required>
+            <input type="text" name="phone_number" placeholder="+country code followed by phone number (no dashes)" required>
         </div>
         <button type="submit">Subscribe</button>
     </form>
