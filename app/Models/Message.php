@@ -17,6 +17,16 @@ class Message extends Model
         'published_at' => 'datetime',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
     // Only show published messages on public page
     public function scopePublished($query)
     {
